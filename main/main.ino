@@ -1,9 +1,13 @@
 int size = 100;
 int current_move = 0;
+int user_current_move = 0;
 int move_list[100];
+int last_test = 0;
+int min_delay = 100;
 
 
 int buzzer = 6;
+int inputs[4] = {0,0,0,0};
 int lights[4] = {2,3,4,5};
 int buttons[4] = {12,13,10,11};
 int notes[4] = {55,110,220,440};
@@ -17,18 +21,18 @@ void generate_moves()
 }
 
 
-int* get_input()
+void get_input()
 {
-  int inputs[4] = {0,0,0,0};
   for(int i = 0; i < 4; i++)
   {
+    inputs[i] = 0;
     if(digitalRead(buttons[i]) == 0)
     {
-      Serial.println(i);
       inputs[i] = 1;
+      
     }
   }
-  return inputs;
+  
 }
 
 void play_move_to(int index)
@@ -36,16 +40,68 @@ void play_move_to(int index)
   for(int i = 0; i < index;i++)
   {
     int color = move_list[i];
+    Serial.print("machine : ");
+    Serial.println(move_list[i]);
     for(int i = 0;i<4;i++)
     {
       digitalWrite(lights[i],0);
     }
-    delay(100);
     digitalWrite(lights[color],1);
     tone(buzzer,notes[color]);
     delay(100);
     noTone(buzzer);
   }
+}
+
+void light_up_leds_input()
+{
+   for(int i = 0;i<4;i++)
+  {
+    digitalWrite(lights[i],0);
+    noTone(buzzer);
+  }
+  for(int i = 0;i < 4;i++)
+  {
+    if(inputs[i])
+    {
+      digitalWrite(lights[i],1);
+      tone(buzzer,notes[i]);
+    }
+  }
+}
+
+
+int check_move()
+{
+  if(millis() - last_test > min_delay)
+  {
+    last_test = millis();
+    for(int i = 0; i < 4;i++)
+    {
+      if(inputs[i] == 1)
+      {
+        Serial.print("user :");
+        Serial.println(i);
+        Serial.print("Move_list :");
+        Serial.print(move_list[user_current_move]);
+
+        if(i == move_list[user_current_move])
+        {
+          return 1;
+        }
+        else
+          return -1;
+          
+      }
+    } 
+    return 0;
+  }
+  else
+  {
+    return 0;
+  }
+ 
+
 }
 
 void setup() {
@@ -57,10 +113,36 @@ void setup() {
   }
   pinMode(buzzer,OUTPUT);
   Serial.begin(9600);
-  
 }
+
 
 void loop() {
   // put your main code here, to run repeatedly:
-  int* inp = get_input();
+  if(!isWaiting)
+  {
+    current_move++;
+    play_move_to(current_move);
+    isWaiting = true;
+  }
+  else
+  {
+    get_input();
+    light_up_leds_input();
+    delay(50);
+    int test = check_move();
+    if(test == -1)
+    {
+      Serial.println("loser");
+    }
+    else if(test)
+    {
+      user_current_move++;
+      if(user_current_move >= current_move)
+      {
+        
+        isWaiting = false;
+        user_current_move = 0;
+      }
+    }
+  }
 }

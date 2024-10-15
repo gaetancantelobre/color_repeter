@@ -1325,6 +1325,26 @@
 	)
 	(wire
 		(pts
+			(xy 143.51 90.17) (xy 139.7 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1542068f-841a-4249-a474-b4a5ca5400ee")
+	)
+	(wire
+		(pts
+			(xy 153.67 92.71) (xy 156.21 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1d157eb4-83b4-4514-85dc-306b7b38609b")
+	)
+	(wire
+		(pts
 			(xy 196.85 54.61) (xy 196.85 59.69)
 		)
 		(stroke
@@ -1425,7 +1445,7 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 95.25) (xy 156.21 95.25)
+			(xy 142.24 97.79) (xy 156.21 97.79)
 		)
 		(stroke
 			(width 0)
@@ -1485,7 +1505,7 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 95.25) (xy 142.24 99.06)
+			(xy 142.24 97.79) (xy 142.24 99.06)
 		)
 		(stroke
 			(width 0)
@@ -1695,13 +1715,23 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 90.17) (xy 139.7 90.17)
+			(xy 144.78 95.25) (xy 143.51 95.25)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "d43346b7-bbb0-4ddd-8dd9-fa2974ab6b07")
+	)
+	(wire
+		(pts
+			(xy 153.67 95.25) (xy 153.67 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "da35fdb7-de54-43cd-9f90-6432f54bf81e")
 	)
 	(wire
 		(pts
@@ -1735,7 +1765,17 @@
 	)
 	(wire
 		(pts
-			(xy 156.21 90.17) (xy 152.4 90.17)
+			(xy 143.51 95.25) (xy 143.51 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e65aa42f-050a-4361-a4fa-f81318b5ba44")
+	)
+	(wire
+		(pts
+			(xy 153.67 95.25) (xy 152.4 95.25)
 		)
 		(stroke
 			(width 0)
@@ -2510,7 +2550,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 148.59 90.17 90)
+		(at 148.59 95.25 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2518,7 +2558,7 @@
 		(dnp no)
 		(uuid "83a523d3-ffd5-4e80-92a8-ec302875e74e")
 		(property "Reference" "R5"
-			(at 148.59 85.344 90)
+			(at 148.59 90.424 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2526,7 +2566,7 @@
 			)
 		)
 		(property "Value" "220 Ω"
-			(at 148.59 87.884 90)
+			(at 148.59 92.964 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2534,7 +2574,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
-			(at 148.59 91.948 90)
+			(at 148.59 97.028 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2543,7 +2583,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 148.59 90.17 0)
+			(at 148.59 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2552,7 +2592,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 148.59 90.17 0)
+			(at 148.59 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2643,7 +2683,7 @@
 	)
 	(symbol
 		(lib_id "Device:Buzzer")
-		(at 158.75 92.71 0)
+		(at 158.75 95.25 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2651,15 +2691,6 @@
 		(dnp no)
 		(uuid "9f29e0f8-47f3-4fa9-9873-b6a803f42ea4")
 		(property "Reference" "BZ1"
-			(at 162.56 91.4399 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Buzzer"
 			(at 162.56 93.9799 0)
 			(effects
 				(font
@@ -2668,8 +2699,17 @@
 				(justify left)
 			)
 		)
+		(property "Value" "Buzzer"
+			(at 162.56 96.5199 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
 		(property "Footprint" "Buzzer_Beeper:Buzzer_12x9.5RM7.6"
-			(at 158.115 90.17 90)
+			(at 158.115 92.71 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2678,7 +2718,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 158.115 90.17 90)
+			(at 158.115 92.71 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2687,7 +2727,7 @@
 			)
 		)
 		(property "Description" "Buzzer, polarized"
-			(at 158.75 92.71 0)
+			(at 158.75 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)

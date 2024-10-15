@@ -9,7 +9,7 @@ int min_delay = 200;
 int buzzer = 6;
 int inputs[4] = {0,0,0,0};
 int lights[4] = {2,3,4,5};
-int buttons[4] = {12,13,10,11};
+int buttons[4] = {10,11,12,13};
 int notes[4] = {55,110,220,440};
 bool isWaiting = false;
 
@@ -44,8 +44,7 @@ void play_move_to(int index)
   for(int i = 0; i < index;i++)
   {
     int color = move_list[i];
-    Serial.print("machine : ");
-    Serial.println(move_list[i]);
+
     for(int i = 0;i<4;i++)
     {
       digitalWrite(lights[i],0);
@@ -88,11 +87,6 @@ int check_move() //this is checking 24/7 make condition checking systeme if inpu
         if(diff > min_delay)
           {
             last_test = now;
-            Serial.print("user :");
-            Serial.println(i);
-            Serial.print("Move_list :");
-            Serial.println(move_list[user_current_move]);
-
             if(i == move_list[user_current_move])
             {
               return 1;
@@ -154,13 +148,13 @@ void loop() {
   }
   else
   {
+    Serial.print("waiting for input:  ");
+    Serial.println(millis());
     get_input();
     light_up_leds_input();
     int test = check_move();
     if(test == -1)
     {
-      Serial.print("lost :");
-      Serial.println(move_list[user_current_move]);
 
       lose_animation();
       get_input();

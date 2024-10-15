@@ -3,7 +3,7 @@ int current_move = 0;
 int user_current_move = 0;
 int move_list[100];
 int last_test = 0;
-int min_delay = 100;
+int min_delay = 200;
 
 
 int buzzer = 6;
@@ -12,6 +12,10 @@ int lights[4] = {2,3,4,5};
 int buttons[4] = {12,13,10,11};
 int notes[4] = {55,110,220,440};
 bool isWaiting = false;
+
+
+int loser_song[5] = {55,65,233,20,333};
+
 void generate_moves()
 {
   for(int i = 0; i < size;i++)
@@ -46,9 +50,11 @@ void play_move_to(int index)
     {
       digitalWrite(lights[i],0);
     }
+    delay(150);
+
     digitalWrite(lights[color],1);
     tone(buzzer,notes[color]);
-    delay(100);
+    delay(150);
     noTone(buzzer);
   }
 }
@@ -70,41 +76,55 @@ void light_up_leds_input()
   }
 }
 
-
-int check_move()
+//TODO:
+int check_move() //this is checking 24/7 make condition checking systeme if input is diff then 0,0,0,0
 {
-  if(millis() - last_test > min_delay)
-  {
-    last_test = millis();
+  int now = millis();
+  int diff = now - last_test;
     for(int i = 0; i < 4;i++)
     {
       if(inputs[i] == 1)
       {
-        Serial.print("user :");
-        Serial.println(i);
-        Serial.print("Move_list :");
-        Serial.print(move_list[user_current_move]);
+        if(diff > min_delay)
+          {
+            last_test = now;
+            Serial.print("user :");
+            Serial.println(i);
+            Serial.print("Move_list :");
+            Serial.println(move_list[user_current_move]);
 
-        if(i == move_list[user_current_move])
-        {
-          return 1;
-        }
-        else
-          return -1;
-          
+            if(i == move_list[user_current_move])
+            {
+              return 1;
+            }
+            else
+              return -1;
+          }
       }
     } 
     return 0;
-  }
-  else
-  {
-    return 0;
-  }
- 
+}
+  
 
+void lose_animation()
+{
+  for(int j = 0;j < 10;j++)
+  {
+    for(int i = 0;i < 4;i++)
+    {
+      digitalWrite(lights[i],0);
+    }
+    delay(100);
+    for(int i = 0;i < 4;i++)
+    {
+      digitalWrite(lights[i],1);
+    }
+    delay(100);
+  }
 }
 
 void setup() {
+  randomSeed(analogRead(0));
   generate_moves();
   for(int i = 0; i < 4;i++)
   {
@@ -113,6 +133,14 @@ void setup() {
   }
   pinMode(buzzer,OUTPUT);
   Serial.begin(9600);
+}
+
+void reset()
+{
+  generate_moves();
+  current_move = 0;
+  user_current_move = 0;
+  isWaiting = false;
 }
 
 
@@ -128,18 +156,23 @@ void loop() {
   {
     get_input();
     light_up_leds_input();
-    delay(50);
     int test = check_move();
     if(test == -1)
     {
-      Serial.println("loser");
+      Serial.print("lost :");
+      Serial.println(move_list[user_current_move]);
+
+      lose_animation();
+      get_input();
+      light_up_leds_input();
+      reset();
+      delay(2000);
     }
     else if(test)
     {
       user_current_move++;
       if(user_current_move >= current_move)
       {
-        
         isWaiting = false;
         user_current_move = 0;
       }

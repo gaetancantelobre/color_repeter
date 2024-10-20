@@ -2,14 +2,14 @@ int size = 100;
 int current_move = 0;
 int user_current_move = 0;
 int move_list[100];
-int last_test = 0;
-int min_delay = 200;
+unsigned long last_test = 0;
+unsigned long min_delay = 400;
 
 
 int buzzer = 6;
 int inputs[4] = {0,0,0,0};
 int lights[4] = {2,3,4,5};
-int buttons[4] = {10,11,12,13};
+int buttons[4] = {14,15,26,27};
 int notes[4] = {55,110,220,440};
 bool isWaiting = false;
 
@@ -78,8 +78,8 @@ void light_up_leds_input()
 //TODO:
 int check_move() //this is checking 24/7 make condition checking systeme if input is diff then 0,0,0,0
 {
-  int now = millis();
-  int diff = now - last_test;
+  unsigned long now = millis();
+  unsigned long diff = now - last_test;
     for(int i = 0; i < 4;i++)
     {
       if(inputs[i] == 1)
@@ -126,7 +126,7 @@ void setup() {
     pinMode(buttons[i],INPUT_PULLUP);
   }
   pinMode(buzzer,OUTPUT);
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 
 void reset()
@@ -140,22 +140,22 @@ void reset()
 
 void loop() {
   // put your main code here, to run repeatedly:
+ 
   if(!isWaiting)
   {
     current_move++;
+    Serial.print("Current move :");
+    Serial.println(current_move);
     play_move_to(current_move);
     isWaiting = true;
   }
   else
   {
-    Serial.print("waiting for input:  ");
-    Serial.println(millis());
     get_input();
     light_up_leds_input();
     int test = check_move();
     if(test == -1)
     {
-
       lose_animation();
       get_input();
       light_up_leds_input();

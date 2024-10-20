@@ -1,7 +1,8 @@
 int size = 100;
 int current_move = 0;
 int user_current_move = 0;
-int move_list[100];
+int* move_list;
+
 unsigned long last_test = 0;
 unsigned long min_delay = 400;
 
@@ -118,6 +119,8 @@ void lose_animation()
 }
 
 void setup() {
+  move_list = (int*)malloc(100 * sizeof(int));
+
   randomSeed(analogRead(0));
   generate_moves();
   for(int i = 0; i < 4;i++)

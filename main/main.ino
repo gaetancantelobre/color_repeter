@@ -88,12 +88,16 @@ int check_move() //this is checking 24/7 make condition checking systeme if inpu
         if(diff > min_delay)
           {
             last_test = now;
-            if(i == move_list[user_current_move])
+            if(user_current_move < 100)
             {
-              return 1;
+              if(i == move_list[user_current_move])
+              {
+                return 1;
+              }
+              else
+                return -1;
             }
-            else
-              return -1;
+              
           }
       }
     } 

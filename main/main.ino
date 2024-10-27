@@ -4,13 +4,12 @@ int user_current_move = 0;
 int* move_list;
 
 unsigned long last_test = 0;
-unsigned long min_delay = 400;
-
+unsigned long min_delay = 240;
 
 int buzzer = 6;
 int inputs[4] = {0,0,0,0};
 int lights[4] = {2,3,4,5};
-int buttons[4] = {14,15,26,27};
+int buttons[4] = {12,13,10,11};
 int notes[4] = {55,110,220,440};
 bool isWaiting = false;
 
@@ -107,18 +106,18 @@ int check_move() //this is checking 24/7 make condition checking systeme if inpu
 
 void lose_animation()
 {
-  for(int j = 0;j < 10;j++)
+  for(int j = 0;j < 5;j++)
   {
     for(int i = 0;i < 4;i++)
     {
       digitalWrite(lights[i],0);
     }
-    delay(100);
+    delay(150);
     for(int i = 0;i < 4;i++)
     {
       digitalWrite(lights[i],1);
     }
-    delay(100);
+    delay(150);
   }
 }
 
